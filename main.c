@@ -33,13 +33,41 @@ int feladat01(kraterek tarol) {
     fclose(be);
     return s_sz;
 }
+
+void feladat02(int s_sz) {
+    printf("2. feladat:\n");
+    printf("A kraterek szama: %d\n",s_sz);
+}
+
+void feladat03(kraterek tarol,int s_sz) {
+    printf("3.feladat:\n");
+    char be_csillagasz[50];
+    printf("Kerem egy krater nevet: ");
+    scanf("%s",be_csillagasz);
+    int talalt = 0;
+    for(int i=0;i<s_sz;i++) {
+        if(strcmp(tarol[i].csillagasz,be_csillagasz) == 0) {
+            printf("A(z) %s kozeppontja X=%.2lf Y=%.2lf sugara R=%.2lf.\n",tarol[i].csillagasz,tarol[i].X,tarol[i].Y,tarol[i].sugar);
+            talalt = 1;
+        }
+    }
+    if(!talalt) printf("Nincs ilyen nevu krater.");
+}
+
 int main()
 {
     kraterek tarol;
     int sorok_szama = feladat01(tarol);
-    printf("%d\n",sorok_szama);
-    for (int i = 0; i<sorok_szama;i++) {
-         printf("%f %f %f %s\n",tarol[i].X,tarol[i].Y,tarol[i].sugar,tarol[i].csillagasz);
-    }
+    /** printf("%d\n",sorok_szama);
+    for(int i = 0; i<sorok_szama;i++) {
+         printf("%.2lf %.2lf %.2lf %s\n",tarol[i].X,tarol[i].Y,tarol[i].sugar,tarol[i].csillagasz);
+    }**/
+    feladat02(sorok_szama);
+    feladat03(tarol,sorok_szama);
+
+
+
+
     return 0;
+
 }
