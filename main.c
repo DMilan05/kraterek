@@ -88,12 +88,16 @@ void feladat06(kraterek tarol,int s_sz) {
     scanf("%s",be_nev);
     int hol_van = 0;
     while (strcmp(tarol[hol_van].nev,be_nev)!=0) hol_van++;
+    char nincs_kozos[200];
+
 
     for (int i =0;i<s_sz;i++) {
-        if (tarol[i].sugar > ln_sugar) {
-            ln_sugar = tarol[i].sugar;
-            ln_sugar_index = i;
+        double tav = tavolsag(tarol[hol_van].X,tarol[i].X,tarol[hol_van].Y,tarol[i].Y);
+        if (tav>(tarol[hol_van].sugar+tarol[i].sugar)) {
+
         }
+
+
     }
 }
 
