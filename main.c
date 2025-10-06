@@ -75,7 +75,7 @@ void feladat04(kraterek tarol,int s_sz) {
 }
 
 //5. feladat
-double tavolsag(double x1,double x2,double y1,double y2) {
+double tavolsag(double x1,double y1,double x2,double y2) {
     return sqrt(((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)));
 }
 
@@ -86,7 +86,13 @@ void feladat06(kraterek tarol,int s_sz) {
     fgets(be_nev,sizeof(be_nev),stdin);
     be_nev[strcspn(be_nev,"\n")] = '\0';
     int hol_van = 0;
-    while (strcmp(tarol[hol_van].nev,be_nev)!=0) hol_van++;
+    while (strcmp(tarol[hol_van].nev,be_nev)!=0) {
+        if (hol_van == s_sz) {
+            printf("\n");
+            return;
+        } else hol_van++;
+    }
+
     printf("Nincs kozos resze: ");
     char nincs_kozos[200][30];
     int hannyal_nincs_kozos = 0;
@@ -99,13 +105,46 @@ void feladat06(kraterek tarol,int s_sz) {
         }
     }
 
-    if (hannyal_nincs_kozos == 0) printf("\n");
-
-    for(int i = 0;i<hannyal_nincs_kozos;i++) {
+   for(int i = 0;i<hannyal_nincs_kozos;i++) {
         printf("%s",nincs_kozos[i]);
         if(i!=hannyal_nincs_kozos-1) printf(", ");
     }
     printf(".\n");
+
+
+
+}
+
+void feladat07(kraterek tarol,int s_sz) {
+    printf("7. feladat:\n");
+    int nagyobb,kisebb;
+    for (int i = 0;i<s_sz-1;i++) {
+        for (int j=i+1;j<s_sz;j++) {
+            if(tarol[i].sugar>tarol[j].sugar) {
+                nagyobb = i;
+                kisebb = j;
+            } else {
+                nagyobb = j;
+                kisebb = i;
+            }
+            double tav = tavolsag(tarol[nagyobb].X,tarol[nagyobb].Y,tarol[kisebb].X,tarol[kisebb].Y);
+            if(tav<tarol[nagyobb].sugar-tarol[kisebb].sugar) {
+                printf("A(z) %s krater tartalmazza a(z) %s kratert.\n",tarol[nagyobb].nev,tarol[kisebb].nev);
+            }
+
+        }
+    }
+}
+
+
+void feladat08(kraterek tarol,int s_sz) {
+    double terulet;
+    FILE* kiir = fopen("terulet.txt","w");
+    for (int i = 0;i<s_sz;i++) {
+        terulet = (tarol[i].sugar*tarol[i].sugar)*3.14;
+        fprintf(kiir,"%.2lf\t%s\n",terulet,tarol[i].nev);
+    }
+    fclose(kiir);
 }
 
 int main()
@@ -120,7 +159,8 @@ int main()
     feladat03(tarol,sorok_szama);
     feladat04(tarol,sorok_szama);
     feladat06(tarol,sorok_szama);
-
+    feladat07(tarol,sorok_szama);
+    feladat08(tarol,sorok_szama);
 
 
     return 0;
