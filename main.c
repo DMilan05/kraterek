@@ -44,17 +44,15 @@ void feladat03(kraterek tarol,int s_sz) {
     printf("3.feladat:\n");
     char be_nev[30];
     printf("Kerem egy krater nevet: ");
-    scanf("%s",be_nev);
+    fgets(be_nev,sizeof(be_nev),stdin);
+    be_nev[strcspn(be_nev,"\n")] = '\0';
     int talalt = 0;
-    int i = 0;
-    while(i<s_sz && talalt !=1) {
 
+    for (int i = 0;i<s_sz;i++) {
         if(strcmp(tarol[i].nev,be_nev) == 0 ) {
             printf("A(z) %s kozeppontja X=%.2lf Y=%.2lf sugara R=%.2lf.\n",tarol[i].nev,tarol[i].X,tarol[i].Y,tarol[i].sugar);
             talalt = 1;
-
-        } else {
-            i++;
+            break;
         }
     }
 
@@ -83,22 +81,31 @@ double tavolsag(double x1,double x2,double y1,double y2) {
 
 void feladat06(kraterek tarol,int s_sz) {
     printf("6.feladat:\n");
-    char be_nev[30];
     printf("Kerem egy krater nevet: ");
-    scanf("%s",be_nev);
+    char be_nev[30];
+    fgets(be_nev,sizeof(be_nev),stdin);
+    be_nev[strcspn(be_nev,"\n")] = '\0';
     int hol_van = 0;
     while (strcmp(tarol[hol_van].nev,be_nev)!=0) hol_van++;
-    char nincs_kozos[200];
-
+    printf("Nincs kozos resze: ");
+    char nincs_kozos[200][30];
+    int hannyal_nincs_kozos = 0;
 
     for (int i =0;i<s_sz;i++) {
         double tav = tavolsag(tarol[hol_van].X,tarol[i].X,tarol[hol_van].Y,tarol[i].Y);
         if (tav>(tarol[hol_van].sugar+tarol[i].sugar)) {
-
+            strcpy(nincs_kozos[hannyal_nincs_kozos],tarol[i].nev);
+            hannyal_nincs_kozos++;
         }
-
-
     }
+
+    if (hannyal_nincs_kozos == 0) printf("\n");
+
+    for(int i = 0;i<hannyal_nincs_kozos;i++) {
+        printf("%s",nincs_kozos[i]);
+        if(i!=hannyal_nincs_kozos-1) printf(", ");
+    }
+    printf(".\n");
 }
 
 int main()
@@ -112,6 +119,7 @@ int main()
     feladat02(sorok_szama);
     feladat03(tarol,sorok_szama);
     feladat04(tarol,sorok_szama);
+    feladat06(tarol,sorok_szama);
 
 
 
